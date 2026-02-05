@@ -19,7 +19,7 @@ public class ExitRoom extends Room implements Exitable {
     @Override
     public String getDescription() {
         if (!unlocked) {
-            return "A heavy door stands before you. It appears to be locked from the other side.";
+            return "A heavy door stands before you. It appears to be locked.";
         }
         return "A heavy door stands before you. Freedom is on the other side. Probably.";
     }

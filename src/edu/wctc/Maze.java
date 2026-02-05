@@ -1,4 +1,3 @@
-// java
 package edu.wctc;
 
 public class Maze {
@@ -6,7 +5,8 @@ public class Maze {
     private Room currentRoom;
     private final Player player;
     private boolean isFinished = false;
-    // when true the next loop should show the current room's description+exits
+
+    // When true the next loop should show the current room's description+exits
     private boolean showRoomDescription = true;
 
     public Maze() {
@@ -15,7 +15,7 @@ public class Maze {
         // Create rooms (3-room mini crawl)
         PuzzleRoom puzzleRoom = new PuzzleRoom("Puzzle Room");
         Room treasureRoom = new TreasureRoom("Treasure Room");
-        ExitRoom exitRoom = new ExitRoom("Exit Room");
+        HiddenExitRoom exitRoom = new HiddenExitRoom("Exit Room");
 
         // Create secret room (hidden until lever is pulled)
         SecretRoom secretRoom = new SecretRoom("Secret Alcove");
@@ -24,6 +24,12 @@ public class Maze {
 
         // Wire secret so it can unlock the exit (keeps reference for unlocking)
         secretRoom.setExitRoom(exitRoom);
+
+        // Create the hidden down-room under the exit (not declared in exit's exits)
+        DownSecretRoom downRoom = new DownSecretRoom("Subterranean Niche");
+        exitRoom.setDown(downRoom);
+        // Ensure the down-room has an 'up' back to the exit
+        downRoom.setExitRoom(exitRoom);
 
         // Connect rooms: Puzzle -> Treasure -> Exit
         puzzleRoom.setEast(treasureRoom);
@@ -52,12 +58,15 @@ public class Maze {
     public String exitCurrentRoom() {
         if (currentRoom instanceof Exitable) {
             String result = ((Exitable) currentRoom).exit(player);
+
+            // If it's the actual ExitRoom and it's unlocked, you win.
             if (currentRoom instanceof ExitRoom && ((ExitRoom) currentRoom).isUnlocked()) {
                 isFinished = true;
             } else if (!(currentRoom instanceof ExitRoom)) {
-                // original behavior: if it's an Exitable non-exit room treat as finish
+                // If it's some other Exitable room, treat as finish
                 isFinished = true;
             }
+
             return result;
         }
         return "This room is not exitable.";
@@ -89,6 +98,13 @@ public class Maze {
 
     public int getPlayerScore() {
         return player.getScore();
+    }
+
+    // Total possible points in this maze configuration:
+    // Puzzle lever (+5) + Treasure chest (+10) + Secret chest (+5) + Secret unlock (+5)
+    // + Exit escape (+20) + Hidden down-room coin (+15) = 60
+    public int getTotalPossibleScore() {
+        return 60;
     }
 
     public String getPlayerInventory() {

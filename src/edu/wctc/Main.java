@@ -1,11 +1,9 @@
 package edu.wctc;
 
-import edu.wctc.Maze;
-
 import java.util.Scanner;
 
 public class Main {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         Maze maze = new Maze();
         Scanner sc = new Scanner(System.in);
 
@@ -34,7 +32,7 @@ public class Main {
                     continue;
                 }
 
-                // Map full words to single-char commands (include common verbs for interact)
+                // Map full words to single-char commands
                 char cmd = token.charAt(0);
                 if (token.startsWith("north")) cmd = 'n';
                 else if (token.startsWith("south")) cmd = 's';
@@ -84,7 +82,8 @@ public class Main {
                 }
             }
 
-            System.out.println("\nMaze finished! Final score: " + maze.getPlayerScore());
+            System.out.println("\nMaze finished! Final score: " + maze.getPlayerScore() +
+                    " / " + maze.getTotalPossibleScore());
         } finally {
             sc.close();
         }
