@@ -11,6 +11,14 @@ public class Player {
         inventory.add(item);
     }
 
+    public boolean hasItem(String item) {
+        return inventory.contains(item);
+    }
+
+    public boolean removeFromInventory(String item) {
+        return inventory.remove(item);
+    }
+
     public void addToScore(int points) {
         score += points;
     }

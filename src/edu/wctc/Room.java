@@ -18,15 +18,15 @@ public abstract class Room {
     public abstract String getDescription();
 
     public Room getAdjoiningRoom(char direction) {
-        switch (Character.toLowerCase(direction)) {
-            case 'n': return north;
-            case 's': return south;
-            case 'e': return east;
-            case 'w': return west;
-            case 'u': return up;
-            case 'd': return down;
-            default:  return null;
-        }
+        return switch (Character.toLowerCase(direction)) {
+            case 'n' -> north;
+            case 's' -> south;
+            case 'e' -> east;
+            case 'w' -> west;
+            case 'u' -> up;
+            case 'd' -> down;
+            default -> null;
+        };
     }
 
     public boolean isValidDirection(char direction) {

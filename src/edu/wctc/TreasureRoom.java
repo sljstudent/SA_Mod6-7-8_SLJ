@@ -1,3 +1,4 @@
+// java
 package edu.wctc;
 
 public class TreasureRoom extends Room implements Lootable {
@@ -10,7 +11,10 @@ public class TreasureRoom extends Room implements Lootable {
 
     @Override
     public String getDescription() {
-        return "A closet-sized room with a dusty chest in the corner. It’s practically begging.";
+        if (!looted) {
+            return "A closet-sized room with a dusty chest in the corner. It’s practically begging.";
+        }
+        return "A closet-sized room with an open, empty chest. Dust swirls where something used to be.";
     }
 
     @Override
