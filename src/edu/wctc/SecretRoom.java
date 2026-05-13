@@ -17,10 +17,10 @@ public class SecretRoom extends Room implements Lootable, Interactable {
     public String getDescription() {
         boolean unlocked = exitRoom != null && exitRoom.isUnlocked();
         if (!looted && !unlocked) {
-            return "A narrow hidden alcove. A dusty chest sits in the corner. A recessed keyhole and a small button are set into the wall.";
+            return "You enter a narrow hidden alcove. A dusty chest sits in the corner. A recessed keyhole and a small button are set into the wall.";
         }
         if (!looted) {
-            return "A narrow hidden alcove. A dusty chest sits in the corner. The button looks pressed.";
+            return "You enter a narrow hidden alcove. A dusty chest sits in the corner. The button looks pressed.";
         }
         if (!unlocked) {
             return "The chest is open and empty. A recessed keyhole and a small button remain on the wall.";

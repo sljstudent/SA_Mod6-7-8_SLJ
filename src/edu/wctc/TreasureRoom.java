@@ -11,9 +11,9 @@ public class TreasureRoom extends Room implements Lootable {
     @Override
     public String getDescription() {
         if (!looted) {
-            return "A larger room with a dusty chest that sits in the corner. What could it be?";
+            return "You enter A larger room with a dusty chest that sits in the corner. What could it be?";
         }
-        return "Back to the larger room with an open, empty chest. Dust swirls where something used to be.";
+        return "you are back to the larger room with an open, empty chest. Dust swirls where something used to be.";
     }
 
     @Override
