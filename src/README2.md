@@ -1,3 +1,7 @@
+<p>Adapted Java Maze program from WCTC's Java I course for use for homework for Modules 6, 7, and 8.
+Software Architecture.</p>
+
+
 <p>You will create a game in which a Player explores a Maze. The Maze is composed of different types of Room objects, some of which are Lootable and/or Interactable. One Room is also Exitable, from which the Player can leave the Maze and end the game.</p>
 <p>Rooms are connected to each other in a grid shape. The Player moves between Rooms along the cardinal compass directions: north, south, east, and west. Rooms may also be above or below each other.</p>
 <p>The Player may earn points by interacting with certain Rooms or looting others. The game continues until the Player exits the Maze, at which time they are given their final score.</p>
