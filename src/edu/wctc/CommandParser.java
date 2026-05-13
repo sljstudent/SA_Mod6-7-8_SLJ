@@ -17,10 +17,11 @@ public class CommandParser {
         else if (token.startsWith("west")) command = 'w';
         else if (token.startsWith("up")) command = 'u';
         else if (token.startsWith("down")) command = 'd';
-        else if (token.startsWith("interact")
-                || token.startsWith("pull")
-                || token.startsWith("use")
-                || token.startsWith("press")) command = 'i';
+        else if (token.startsWith("interact") //hopefully everyone just uses 'i'!
+                || token.startsWith("open") //open chest
+                || token.startsWith("pull") //pull lever maybe
+                || token.startsWith("use") //use key, use lever
+                || token.startsWith("press")) command = 'i'; //press button
         else if (token.startsWith("exit")) command = 'x';
         else if (token.startsWith("inventory")) command = 'v';
         else if (token.startsWith("quit")) command = 'q';

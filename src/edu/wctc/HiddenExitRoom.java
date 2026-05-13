@@ -21,9 +21,9 @@ public class HiddenExitRoom extends ExitRoom {
         }
 
         StringBuilder sb = new StringBuilder("Exits:");
-        for (String tok : rest.split("\\s+")) {
-            if (!tok.equals("d")) {
-                sb.append(" ").append(tok);
+        for (String token : rest.split("\\s+")) {
+            if (!token.equals("d")) {
+                sb.append(" ").append(token);
             }
         }
 

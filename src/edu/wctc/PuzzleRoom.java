@@ -1,4 +1,3 @@
-// java
 package edu.wctc;
 
 public class PuzzleRoom extends Room implements Interactable {

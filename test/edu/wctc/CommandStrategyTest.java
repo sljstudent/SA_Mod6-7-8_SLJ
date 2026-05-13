@@ -49,7 +49,7 @@ class CommandStrategyTest {
         assertFalse(maze.isFinished());
         String result = new QuitCommandStrategy().execute(maze);
 
-        assertEquals("Quitting the maze.", result);
+        assertEquals("Quitting the maze. It was toooo tough!", result);
         assertTrue(maze.isFinished());
     }
 }
