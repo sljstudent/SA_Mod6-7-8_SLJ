@@ -31,12 +31,12 @@ public class SecretRoom extends Room implements Lootable, Interactable {
     @Override
     public String loot(Player player) {
         if (looted) {
-            return "You rummage through the chest again. It's empty.";
+            return "You rummage through the chest again. It's empty. Much to everyone's surprise";
         }
 
         looted = true;
         player.addToInventory("Ancient Coin");
-        player.addToScore(5);
+        player.addToScore(GameConfig.getInstance().getSecretLootedPoints());
         return "You open the chest and find an Ancient Coin! (+5 score)";
     }
 
@@ -55,7 +55,7 @@ public class SecretRoom extends Room implements Lootable, Interactable {
         // consume the key, unlock the exit, reward the player
         player.removeFromInventory("Rusty Key");
         exitRoom.setUnlocked(true);
-        player.addToScore(5);
+        player.addToScore(GameConfig.getInstance().getExitUnlockedPoints());
         return "You insert the Rusty Key, turn it and press the hidden button. A distant mechanism unlocks the final door! (+5 score)";
     }
 }

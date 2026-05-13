@@ -6,6 +6,7 @@ import java.util.List;
 public class Player {
     private int score;
     private final List<String> inventory = new ArrayList<>();
+    private final List<ScoreObserver> scoreObservers = new ArrayList<>();
 
     public void addToInventory(String item) {
         inventory.add(item);
@@ -21,6 +22,7 @@ public class Player {
 
     public void addToScore(int points) {
         score += points;
+        notifyScoreObservers(points);
     }
 
     public String getInventory() {
@@ -32,5 +34,15 @@ public class Player {
 
     public int getScore() {
         return score;
+    }
+
+    public void addScoreObserver(ScoreObserver observer) {
+        scoreObservers.add(observer);
+    }
+
+    private void notifyScoreObservers(int pointsAdded) {
+        for (ScoreObserver observer : scoreObservers) {
+            observer.scoreChanged(pointsAdded, score);
+        }
     }
 }

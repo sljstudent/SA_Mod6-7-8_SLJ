@@ -31,7 +31,7 @@ public class PuzzleRoom extends Room implements Interactable {
             return "You pull the lever again. Nothing happens.";
         }
         solved = true;
-        player.addToScore(5);
+        player.addToScore(GameConfig.getInstance().getPuzzleSolvedPoints());
         if (secretRoom != null) {
             // open the secret passage
             setNorth(secretRoom);

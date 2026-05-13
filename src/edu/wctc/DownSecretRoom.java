@@ -16,7 +16,7 @@ public class DownSecretRoom extends Room implements Lootable {
     @Override
     public String getDescription() {
         if (!looted) {
-            return "A cramped chamber hidden beneath the final door. A small pedestal holds a gleaming coin.\nWhat an Easter Egg!!! I hope you got all the points!";
+            return "A cramped chamber hidden beneath the final door! Whoa! A small pedestal holds a gleaming coin.\nWhat an Easter Egg!!! I hope you got all the points!";
         }
         return "The pedestal is empty. Dust settles on the floor.";
     }
@@ -28,7 +28,7 @@ public class DownSecretRoom extends Room implements Lootable {
         }
         looted = true;
         player.addToInventory("Gleaming Coin");
-        player.addToScore(15);
+        player.addToScore(GameConfig.getInstance().getHiddenLootedPoints());
         return "You take the Gleaming Coin! (+15 score)";
     }
 }

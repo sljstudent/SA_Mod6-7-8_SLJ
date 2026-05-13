@@ -1,4 +1,3 @@
-// java
 package edu.wctc;
 
 public class TreasureRoom extends Room implements Lootable {
@@ -14,7 +13,7 @@ public class TreasureRoom extends Room implements Lootable {
         if (!looted) {
             return "A larger room with a dusty chest that sits in the corner. What could it be?";
         }
-        return "Back to the largeer room with an open, empty chest. Dust swirls where something used to be.";
+        return "Back to the larger room with an open, empty chest. Dust swirls where something used to be.";
     }
 
     @Override
@@ -25,7 +24,7 @@ public class TreasureRoom extends Room implements Lootable {
 
         looted = true;
         player.addToInventory("Rusty Key");
-        player.addToScore(10);
+        player.addToScore(GameConfig.getInstance().getTreasureLootedPoints());
 
         return "You loot the chest and find a Rusty Key! (+10 score)";
     }

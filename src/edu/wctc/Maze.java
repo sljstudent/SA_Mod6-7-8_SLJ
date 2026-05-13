@@ -4,53 +4,52 @@ public class Maze {
 
     private Room currentRoom;
     private final Player player;
+    private final GameConfig config;
+    private final ScoreAuditLog scoreAuditLog = new ScoreAuditLog();
     private boolean isFinished = false;
 
     // When true the next loop should show the current room's description+exits
     private boolean showRoomDescription = true;
 
     public Maze() {
-        player = new Player();
+        this(new Player(), new MazeRoomCreator(), GameConfig.getInstance());
+    }
 
-        // Create rooms (3-room mini crawl)
-        PuzzleRoom puzzleRoom = new PuzzleRoom("Puzzle Room");
-        Room treasureRoom = new TreasureRoom("Treasure Room");
-        HiddenExitRoom exitRoom = new HiddenExitRoom("Exit Room");
+    public Maze(Player player, RoomCreator roomCreator, GameConfig config) {
+        this.player = player;
+        this.config = config;
+        this.player.addScoreObserver(scoreAuditLog);
 
-        // Create secret room (hidden until lever is pulled)
-        SecretRoom secretRoom = new SecretRoom("Secret Alcove");
-        // Secret room connects back to the puzzle room only (no direct path to exit)
+        //use the enums from RoomType
+        PuzzleRoom puzzleRoom = (PuzzleRoom) roomCreator.create(RoomType.PUZZLE);
+        Room treasureRoom = roomCreator.create(RoomType.TREASURE);
+        HiddenExitRoom exitRoom = (HiddenExitRoom) roomCreator.create(RoomType.EXIT);
+        SecretRoom secretRoom = (SecretRoom) roomCreator.create(RoomType.SECRET);
+        DownSecretRoom downRoom = (DownSecretRoom) roomCreator.create(RoomType.HIDDEN_DOWN);
+
         secretRoom.setSouth(puzzleRoom);
-
-        // Wire secret so it can unlock the exit (keeps reference for unlocking)
         secretRoom.setExitRoom(exitRoom);
 
-        // Create the hidden down-room under the exit (not declared in exit's exits)
-        DownSecretRoom downRoom = new DownSecretRoom("Subterranean Niche");
         exitRoom.setDown(downRoom);
-        // Ensure the down-room has an 'up' back to the exit
         downRoom.setExitRoom(exitRoom);
 
-        // Connect rooms: Puzzle -> Treasure -> Exit
         puzzleRoom.setEast(treasureRoom);
         treasureRoom.setWest(puzzleRoom);
 
         treasureRoom.setEast(exitRoom);
         exitRoom.setWest(treasureRoom);
 
-        // Wire secret: pulling the lever in the puzzle room opens a north passage to the secret room
         puzzleRoom.setSecretRoom(secretRoom);
 
-        // Starting room
         currentRoom = puzzleRoom;
     }
 
-    // Called by UI to check if description should be shown
+    // show discription
     public boolean shouldShowRoomDescription() {
         return showRoomDescription;
     }
 
-    // Mark that the description has been shown
+    // has the description been shown?
     public void setRoomDescriptionShown() {
         showRoomDescription = false;
     }
@@ -59,11 +58,11 @@ public class Maze {
         if (currentRoom instanceof Exitable) {
             String result = ((Exitable) currentRoom).exit(player);
 
-            // If it's the actual ExitRoom and it's unlocked, you win.
+            // how do we exit? if Exitroom and if its unlocked!
             if (currentRoom instanceof ExitRoom && ((ExitRoom) currentRoom).isUnlocked()) {
                 isFinished = true;
             } else if (!(currentRoom instanceof ExitRoom)) {
-                // If it's some other Exitable room, treat as finish
+                // If it's some other Exitable room... that I don't have yet... ....
                 isFinished = true;
             }
 
@@ -104,7 +103,7 @@ public class Maze {
     // Puzzle lever (+5) + Treasure chest (+10) + Secret chest (+5) + Secret unlock (+5)
     // + Exit escape (+20) + Hidden down-room coin (+15) = 60
     public int getTotalPossibleScore() {
-        return 60;
+        return config.getTotalPossibleScore();
     }
 
     public String getPlayerInventory() {
@@ -121,5 +120,17 @@ public class Maze {
 
     public boolean isFinished() {
         return isFinished;
+    }
+
+    public void quit() {
+        isFinished = true;
+    }
+
+    public String getCurrentRoomName() {
+        return currentRoom.getName();
+    }
+
+    public ScoreAuditLog getScoreAuditLog() {
+        return scoreAuditLog;
     }
 }

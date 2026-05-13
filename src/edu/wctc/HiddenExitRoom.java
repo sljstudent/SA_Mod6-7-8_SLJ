@@ -1,4 +1,3 @@
-// File: src/edu/wctc/HiddenExitRoom.java
 package edu.wctc;
 
 public class HiddenExitRoom extends ExitRoom {
